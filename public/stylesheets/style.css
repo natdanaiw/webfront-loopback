@@ -1,0 +1,482 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+
+.success_status {
+  margin-left: 1rem;
+  border-radius: 60px;
+  background-color: green;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  transition-duration: 0.4s;
+}
+
+
+.success_button {
+  border-radius: 4px;
+  background-color: green;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+}
+
+.process_button {
+  border-radius: 4px;
+  background-color: blue;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+}
+
+.error_button {
+  border-radius: 4px;
+  background-color: red;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+}
+
+.warn_button {
+  border-radius: 4px;
+  background-color: orange;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+}
+
+.refresh_button {
+  border-radius: 4px;
+  background-color: grey;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  transition-duration: 0.4s;
+}
+
+.blink_process {
+  color: blue;
+  /*animation: blinker 2s linear infinite;*/
+}
+
+.error_process {
+  color: red;
+
+}
+
+.warn_process {
+  color: orange;
+
+}
+
+.success_process {
+  color: green;
+
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+
+.card-content {
+  padding: 20px;
+}
+
+.card-content h3 {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.card-content p {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 0;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #ddd;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+
+.content-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.col-1,
+.col-2 {
+  width: 50%;
+  /*padding: 20px;*/
+}
+
+@media (max-width: 600px) {
+
+  .col-1,
+  .col-2 {
+    width: 100%;
+  }
+}
+
+.lable {
+  padding-top: 15px;
+
+}
+
+/* CSS */
+.button-8 {
+  background-color: #e1ecf4;
+  border-radius: 3px;
+  border: 1px solid #7aa7c7;
+  box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #39739d;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15385;
+  margin: 0;
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.button-8:hover,
+.button-8:focus {
+  background-color: #b3d3ea;
+  color: #2c5777;
+}
+
+.button-8:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.button-8:active {
+  background-color: #a0c7e4;
+  box-shadow: none;
+  color: #2c5777;
+}
+
+
+.visuallyhidden {
+  display: none;
+}
+
+.wizard-progress {
+  list-style: none;
+  list-style-image: none;
+  margin: 20px auto;
+  padding: 0;
+  margin-top: 20px;
+  float: left;
+  white-space: nowrap;
+}
+
+.wizard-progress li {
+  float: left;
+  margin-right: 30px;
+  text-align: center;
+  position: relative;
+  width: 95px;
+}
+
+.wizard-progress .step-name {
+  display: table-cell;
+  height: 32px;
+  vertical-align: top;
+  text-align: center;
+  width: 100px;
+  font-size: 13px;
+
+}
+
+.wizard-progress .step-name-wrapper {
+  display: table-cell;
+  height: 100%;
+  vertical-align: bottom;
+}
+
+.wizard-progress .step-num {
+  font-size: 14px;
+  font-weight: bold;
+  border: 3px solid #000;
+  border-radius: 50%;
+  width: 18px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.wizard-progress .step-num:after {
+  content: "";
+  display: block;
+  background: #646464;
+  height: 5px;
+  width: 105px;
+  position: absolute;
+  bottom: 10px;
+  left: 58px;
+}
+
+.wizard-progress .active-step .step-num:after {
+  content: "";
+  display: block;
+  background: #039d2c;
+  height: 5px;
+  width: 105px;
+  position: absolute;
+  bottom: 10px;
+  left: 58  px;
+
+}
+
+.wizard-progress .current-step .step-name {
+  font-weight: bold;
+}
+
+.wizard-progress .current-step .step-num {
+  background-color: #00ee30;
+}
+
+
+.wizard-progress li:last-of-type .step-num:after {
+  display: none;
+}
+
+.wizard-progress .active-step .step-num {
+  background-color: #00ee30;
+}
+
+.wizard-progress .error-step .step-num {
+  background-color: #ee0000;
+}
+
+.wizard-progress .error-step .step-name {
+  font-weight: bold;
+  color: #ee0000;
+}
+
+.help {
+  color: #fff;
+  background-color: #18056e;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  border-radius: 100%;
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-box-shadow: inset -1px -1px 1px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: inset -1px -1px 1px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: inset -1px -1px 1px 0px rgba(0, 0, 0, 0.25);
+}
+
+.confirmPopup {
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+fieldset {
+  padding: 0;
+  border: 0;
+  margin-top: 25px;
+}
+
+label,
+input {
+  display: block;
+}
+
+input.text {
+  margin-bottom: 12px;
+  width: 95%;
+  padding: .4em;
+}
+
+.loading {
+  height: 30px;
+  width: 30px;
+  margin-left: 10px;
+}
+
+.active-log {
+  font-weight: bolder;
+}
+
+.status {
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
+  margin-top: -5px;
+  
+}
+
+.system-online{
+  font-weight: bold;
+}
+
+.system-offline{
+  font-weight: bold;
+  /*animation: blinker 2s linear infinite;*/
+  color: red; 
+}
+
+.system-offline img{
+  font-weight: bold;
+  animation: blinker 2s linear infinite;
+  color: red; 
+}
+
+
+.filter-button {
+  background-color: #e1ecf4;
+  border-radius: 3px;
+  border: 1px solid #7aa7c7;
+  box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #39739d;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15385;
+  margin: 0;
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+
+.filter-button:hover,
+.filter-button:focus {
+  background-color: #b3d3ea;
+  color: #2c5777;
+}
+
+.filter-button:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.filter-button:active {
+  background-color: #a0c7e4;
+  box-shadow: none;
+  color: #2c5777;
+}
+
+.filter-active-button {
+  background-color: #f8ae03;
+  border-radius: 3px;
+  border: 1px solid #7aa7c7;
+  box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #39739d;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15385;
+  margin: 0;
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}

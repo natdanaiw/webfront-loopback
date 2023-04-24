@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../views/partials/head'); %>
+</head>
+
+<body class="container">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item center">
+                    <a class="nav-link" href="/"><span class="process_button">
+                            << Back</span></a>
+                </li>
+            </ul>
+
+        </nav>
+        <div class="card">
+
+            <div class="card-content">
+                <h3>Orders <span id="totalData"></span></h3>
+                <div class="content-container">
+                    <div class="col-1">
+                        <span id="add_item" class="button-8">Add Item</span>
+                    </div>
+                    <div class="col-2">
+                        <span id="previous_item" class="button-8">
+                            << </span>
+                                <span id="next_item" class="button-8"> >> </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="input-form">
+            <label>Item No.: </label><input id="item_no" disabled />
+            <label>Item Name: </label><input id="item_name" size="50" />
+            <label>Item Price: </label><input id="item_price" />
+
+            <div style="margin-top: 30px;">
+                <span id="delete_itm" class="button-8">Delete</span>
+                <span id="save_item" class="button-8">Save</span>
+                <span id="create_item" class="button-8">Add</span>
+                <span id="cancel_item" class="button-8">Cancel</span>
+            </div>
+        </div>
+    </header>
+    <main>
+        <table id="item_table" width="100%">
+            <thead>
+                <th>Item No.</th>
+                <th>Item Name</th>
+                <th>Item Price</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    </main>
+
+
+    <footer>
+        <%- include('../views/partials/footer'); %>
+    </footer>
+
+</body>
+
+<script>
+
+    $(document).ready(function () {
+        var apiurl = '<%= apiurl %>';
+        var orderapi = '<%= orderapi %>';
+        apiurl += orderapi;
+
+        var offset = 0;
+        var total = 0;
+
+        getData(offset, '');
+        getTotalData();
+
+        $('#next_item').click(function () {
+            if ((offset + 10) < total) {
+                offset += 10;
+            }
+            getData(offset, '');
+        });
+
+        $('#previous_item').click(function () {
+            offset -= 10;
+            if (offset < 0) {
+                offset = 0;
+            }
+            getData(offset, '');
+        });
+
+        function getTotalData() {
+            $.ajax({
+                type: "GET",
+                url: apiurl + '/count',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log("Total: " + response.count);
+                    total = response.count;
+                    $('#totalData').text('(' + (offset + 1) + '-' + (offset + 10) + ')(' + total + ')');
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response here
+                    alert('Failed to call.');
+                    //location.reload();
+                    console.log('Error:', error);
+                    console.log('Status:', status);
+                    console.log('XHR:', xhr);
+                }
+            });
+
+
+        }
+
+        function getData(offset, searchData) {
+
+            filter = '{"offset": ' + offset + ', "limit": 10}';
+
+            //var filter = '';
+            $.ajax({
+                type: "GET",
+                url: apiurl,
+                data: {
+                    filter: filter
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    //refreshIntervalId = startRefresh();
+                    console.log(response);
+                    var itemlist = '';
+                    response.forEach(element => {
+                        //console.log(element);
+                        itemlist += '<tr><td>' + element.ITMNUM + '</td><td>' + element.ITMNAM + '</td><td>' + element.ITMPRC + '</td><td><span id="edit_item" name="' + element.ITMNUM + '" class="button-8"> Edit </span> | <span id="delete_item" name="' + element.ITMNUM + '" class="button-8"> Delete </span></td></tr>';
+                    });
+
+                    $('#totalData').text('(' + (offset + 1) + '-' + (offset + response.length) + ')(' + total + ')');
+
+                    $('#item_table>tbody').html(itemlist);
+
+
+
+                    $("#edit_item*").each(function (index) {
+                        $(this).click(function () {
+                            //console.log($(this).attr('name') + ' ' + index);
+                            //console.log($('#item_table>tbody>tr:eq(' + index + ')>td:eq(1)').text());
+                            item_no = $('#item_table>tbody>tr:eq(' + index + ')>td:eq(0)').text().trim();
+                            item_name = $('#item_table>tbody>tr:eq(' + index + ')>td:eq(1)').text().trim();
+                            item_price = $('#item_table>tbody>tr:eq(' + index + ')>td:eq(2)').text().trim();
+
+
+
+                            $('#item_no').val(item_no).attr("disabled", "true");
+                            $('#item_name').val(item_name).removeAttr("disabled");
+                            $('#item_price').val(item_price).removeAttr("disabled");
+
+                            $('#save_item').show();
+                            $('#delete_itm').hide();
+                            $('#create_item').hide();
+
+                            $('#item_no').val(item_no);
+
+                            $('#item_name').val(item_name);
+                            $('#item_price').val(item_price);
+
+                            $("#input-form").dialog("open");
+                        });
+                    });
+
+                    $("#delete_item*").each(function (index) {
+
+                        $(this).click(function () {
+                            //console.log($(this).attr('name') + ' ' + index);
+                            //console.log($('#item_table>tbody>tr:eq(' + index + ')>td:eq(1)').text());
+                            item_no = $('#item_table>tbody>tr:eq(' + index + ')>td:eq(0)').text().trim();
+                            item_name = $('#item_table>tbody>tr:eq(' + index + ')>td:eq(1)').text().trim();
+                            item_price = $('#item_table>tbody>tr:eq(' + index + ')>td:eq(2)').text().trim();
+
+                            $('#item_no').val(item_no).attr("disabled", "true");
+                            $('#item_name').val(item_name).attr("disabled", "true");
+                            $('#item_price').val(item_price).attr("disabled", "true");
+
+                            $('#save_item').hide();
+                            $('#create_item').hide();
+                            $('#delete_itm').show();
+
+                            $("#input-form").dialog(
+                                {
+                                    title: "Confirm Delete"
+                                }
+                            ).dialog("open");;
+                        });
+                    });
+
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response here
+                    alert('Failed to call.');
+                    //location.reload();
+                    console.log('Error:', error);
+                    console.log('Status:', status);
+                    console.log('XHR:', xhr);
+                }
+            });
+
+
+        }
+        $('#delete_itm').click(function () {
+            $.ajax({
+                type: "DELETE",
+                url: apiurl + '/' + $('#item_no').val(),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    //refreshIntervalId = startRefresh();                    
+                    getData(offset, '');
+                    getTotalData();
+                    $("#input-form").dialog("close");
+                    alert("Data deleted");
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response here
+                    alert('Failed to call.');
+                    //location.reload();
+                    console.log('Error:', error);
+                    console.log('Status:', status);
+                    console.log('XHR:', xhr);
+                }
+            });
+        });
+
+        $("#save_item").click(function () {
+            var updateData = {
+                "ITMNAM": $('#item_name').val(),
+                "ITMPRC": $('#item_price').val()
+            };
+            $.ajax({
+                type: "PATCH",
+                data: JSON.stringify(updateData),
+                url: apiurl + '/' + $('#item_no').val(),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    //refreshIntervalId = startRefresh();                    
+                    getData(offset, '');
+                    getTotalData();
+                    $("#input-form").dialog("close");
+                    alert("Data saved");
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response here
+                    alert('Failed to call.');
+                    //location.reload();
+                    console.log('Error:', error);
+                    console.log('Status:', status);
+                    console.log('XHR:', xhr);
+                }
+            });
+        });
+
+        $("#add_item").click(function () {
+            item_no = '';
+            item_name = '';
+            item_price = '';
+
+            $('#item_no').val(item_no).removeAttr("disabled");
+            $('#item_name').val(item_name).removeAttr("disabled");
+            $('#item_price').val(item_price).removeAttr("disabled");
+
+            $('#save_item').hide();
+            $('#delete_itm').hide();
+            $('#create_item').show();
+
+            $("#input-form").dialog(
+                {
+                    title: "Confirm Delete"
+                }
+            ).dialog("open");;
+        });
+
+        $('#create_item').click(function () {
+            var updateData = {
+                "ITMNUM": $('#item_no').val().trim(),
+                "ITMNAM": $('#item_name').val().trim(),
+                "ITMPRC": $('#item_price').val().trim()
+            };
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(updateData),
+                url: apiurl,
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    //refreshIntervalId = startRefresh();                    
+                    getData(offset, '');
+                    getTotalData();
+                    $("#input-form").dialog("close");
+                    alert("Data created");
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response here
+                    alert('Failed to call.');
+                    //location.reload();
+                    console.log('Error:', error);
+                    console.log('Status:', status);
+                    console.log('XHR:', xhr);
+                }
+            });
+        });
+
+        $("#cancel_item").click(function () {
+            $("#input-form").dialog("close");
+        });
+
+        $("#input-form").dialog({
+            autoOpen: false,
+            title: 'Edit Item',
+            height: 250,
+            width: 450,
+            modal: true
+        });
+    });
+
+</script>
+
+</html>

@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../views/partials/head'); %>
+
+</head>
+
+<body class="container">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item center">
+                    <a class="nav-link" href="/"><span class="process_button">
+                            << Back</span></a>
+                </li>
+            </ul>
+            <span> - Refresh in <i id="timer"></i> s</span>
+        </nav>
+        <div class="card">
+
+            <div class="card-content">
+                <h3>Information </h3>
+                <div class="content-container">
+                    <div class="col-1">
+                        <div class="lable">Registration No. : <span style="font-weight: bold;">
+                                <%= registration_no %>
+                            </span></div>
+                        <div class="lable">เลขบัญชี : <span style="font-weight: bold;">
+                                <%= customer_account %>
+                            </span></div>
+
+                        <div class="lable">Customer Name : <span style="font-weight: bold;">
+                                <%= customer_name %>
+                            </span></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="lable">ประเภทบัญชี : <span style="font-weight: bold;">
+                                <%= account_type %>
+                            </span></div>
+                        <div class="lable">ประเภทฝาก : <span style="font-weight: bold;">
+                                <%= deposite_type %>
+                            </span></div>
+                        <div class="lable">จำนวนเงิน : <span style="font-weight: bold;">
+                                <%= amount %>
+                            </span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <h3>Step <span class="help"><a href="#" id="help">?</a></span></h3>
+                <div class="content-container">
+                    <% if (deposite_type==='ATS' ) { %>
+                        <% if (account_type==='Cash Balance' || account_type==='Credit Balance' ) { %>
+                            <ol id="ats-cash-balance" class="wizard-progress clearfix">
+                                <li>
+                                    <span class="step-name">
+                                        Collect Data
+                                    </span>
+                                    <span class="visuallyhidden">Step </span><span class="step-num">1</span>
+                                </li>
+                                <li>
+                                    <span class="step-name">Entry Data to SBA</span>
+                                    <span class="visuallyhidden">Step </span><span class="step-num">2</span>
+                                </li>
+                                <li>
+                                    <span class="step-name">Export Bank File</span>
+                                    <span class="visuallyhidden">Step </span><span class="step-num">3</span>
+                                </li>
+                                <li>
+                                    <span class="step-name">Import Bank File</span>
+                                    <span class="visuallyhidden">Step </span><span class="step-num">4</span>
+                                </li>
+                                <li>
+                                    <span class="step-name">Authorizer Confirm</span>
+                                    <span class="visuallyhidden">Step </span><span class="step-num">5</span>
+                                </li>
+                                <li>
+                                    <span class="step-name">Update Front</span>
+                                    <span class="visuallyhidden">Step </span><span class="step-num">6</span>
+                                </li>
+                                <li>
+                                    <span class="step-name">Finish</span>
+                                    <span class="visuallyhidden">Step </span><span class="step-num">F</span>
+                                </li>
+                            </ol>
+
+                            <% } else if (account_type==='Cash Account' ) { %>
+                                <ol id="ats-cash-account-credit" class="wizard-progress clearfix">
+                                    <li>
+                                        <span class="step-name">
+                                            Collect Data
+                                        </span>
+                                        <span class="visuallyhidden">Step </span><span class="step-num">1</span>
+                                    </li>
+                                    <li>
+                                        <span class="step-name">Entry Data to SBA</span>
+                                        <span class="visuallyhidden">Step </span><span class="step-num">2</span>
+                                    </li>
+                                    <li>
+                                        <span class="step-name">Export Bank File</span>
+                                        <span class="visuallyhidden">Step </span><span class="step-num">3</span>
+                                    </li>
+                                    <li>
+                                        <span class="step-name">Import Bank File</span>
+                                        <span class="visuallyhidden">Step </span><span class="step-num">4</span>
+                                    </li>
+                                    <li>
+                                        <span class="step-name">Authorizer Confirm</span>
+                                        <span class="visuallyhidden">Step </span><span class="step-num">5</span>
+                                    </li>
+                                    <li>
+                                        <span class="step-name">Verify Credit</span>
+                                        <span class="visuallyhidden">Step </span><span class="step-num">6</span>
+                                    </li>
+                                    <li>
+                                        <span class="step-name">Update Front</span>
+                                        <span class="visuallyhidden">Step </span><span class="step-num">7</span>
+                                    </li>
+                                    <li>
+                                        <span class="step-name">Finish</span>
+                                        <span class="visuallyhidden">Step </span><span class="step-num">F</span>
+                                    </li>
+                                </ol>
+
+                                <% } else if (account_type==='T-FEX' ) { %>
+
+                                    <ol id="ats-tfex" class="wizard-progress clearfix">
+                                        <li>
+                                            <span class="step-name">
+                                                Collect Data
+                                            </span>
+                                            <span class="visuallyhidden">Step </span><span class="step-num">1</span>
+                                        </li>
+                                        <li>
+                                            <span class="step-name">Entry Data to BSB</span>
+                                            <span class="visuallyhidden">Step </span><span class="step-num">2</span>
+                                        </li>
+                                        <li>
+                                            <span class="step-name">Confirm Transaction</span>
+                                            <span class="visuallyhidden">Step </span><span class="step-num">3</span>
+                                        </li>
+                                        <li>
+                                            <span class="step-name">Export Bank File</span>
+                                            <span class="visuallyhidden">Step </span><span class="step-num">4</span>
+                                        </li>
+                                        <li>
+                                            <span class="step-name">Import Bank File</span>
+                                            <span class="visuallyhidden">Step </span><span class="step-num">5</span>
+                                        </li>
+                                        <li>
+                                            <span class="step-name">Authorizer Confirm</span>
+                                            <span class="visuallyhidden">Step </span><span class="step-num">6</span>
+                                        </li>
+                                        <li>
+                                            <span class="step-name">Settlement</span>
+                                            <span class="visuallyhidden">Step </span><span class="step-num">7</span>
+                                        </li>
+                                        <li>
+                                            <span class="step-name">Update Front</span>
+                                            <span class="visuallyhidden">Step </span><span class="step-num">8</span>
+                                        </li>
+                                        <li>
+                                            <span class="step-name">Finish</span>
+                                            <span class="visuallyhidden">Step </span><span class="step-num">F</span>
+                                        </li>
+                                    </ol>
+                                    <% } %>
+
+                                        <% } else if (deposite_type==='Bill Payment' ) { %>
+                                            <% if (account_type==='Cash Balance' || account_type==='Credit Balance' ) {
+                                                %>
+                                                <ol id="bill-cash-balance" class="wizard-progress clearfix">
+                                                    <li>
+                                                        <span class="step-name">
+                                                            Collect Data
+                                                        </span>
+                                                        <span class="visuallyhidden">Step </span><span
+                                                            class="step-num">1</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="step-name">Verify Slip</span>
+                                                        <span class="visuallyhidden">Step </span><span
+                                                            class="step-num">2</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="step-name">Entry Data to SBA</span>
+                                                        <span class="visuallyhidden">Step </span><span
+                                                            class="step-num">3</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="step-name">Export Bank File</span>
+                                                        <span class="visuallyhidden">Step </span><span
+                                                            class="step-num">4</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="step-name">Import Bank File</span>
+                                                        <span class="visuallyhidden">Step </span><span
+                                                            class="step-num">5</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="step-name">Authorizer Confirm</span>
+                                                        <span class="visuallyhidden">Step </span><span
+                                                            class="step-num">6</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="step-name">Update Front</span>
+                                                        <span class="visuallyhidden">Step </span><span
+                                                            class="step-num">7</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="step-name">Finish</span>
+                                                        <span class="visuallyhidden">Step </span><span
+                                                            class="step-num">F</span>
+                                                    </li>
+                                                </ol>
+                                                <% } else if (account_type==='Cash Account' ) { %>
+                                                    <ol id="bill-cash-account-credit" class="wizard-progress clearfix">
+                                                        <li>
+                                                            <span class="step-name">
+                                                                Collect Data
+                                                            </span>
+                                                            <span class="visuallyhidden">Step </span><span
+                                                                class="step-num">1</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="step-name">Verify Slip</span>
+                                                            <span class="visuallyhidden">Step </span><span
+                                                                class="step-num">2</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="step-name">Entry Data to SBA</span>
+                                                            <span class="visuallyhidden">Step </span><span
+                                                                class="step-num">3</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="step-name">Export Bank File</span>
+                                                            <span class="visuallyhidden">Step </span><span
+                                                                class="step-num">4</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="step-name">Import Bank File</span>
+                                                            <span class="visuallyhidden">Step </span><span
+                                                                class="step-num">5</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="step-name">Authorizer Confirm</span>
+                                                            <span class="visuallyhidden">Step </span><span
+                                                                class="step-num">6</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="step-name">Verify Credit</span>
+                                                            <span class="visuallyhidden">Step </span><span
+                                                                class="step-num">7</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="step-name">Update Front</span>
+                                                            <span class="visuallyhidden">Step </span><span
+                                                                class="step-num">8</span>
+                                                        </li>
+                                                        <li>
+                                                            <span class="step-name">Finish</span>
+                                                            <span class="visuallyhidden">Step </span><span
+                                                                class="step-num">F</span>
+                                                        </li>
+                                                    </ol>
+
+
+                                                    <% } else if (account_type==='T-FEX' ) { %>
+
+                                                        <ol id="bill-tfex" class="wizard-progress clearfix">
+                                                            <li>
+                                                                <span class="step-name">
+                                                                    Collect Data
+                                                                </span>
+                                                                <span class="visuallyhidden">Step </span><span
+                                                                    class="step-num">1</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="step-name">Verify Slip</span>
+                                                                <span class="visuallyhidden">Step </span><span
+                                                                    class="step-num">2</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="step-name">Entry Data to BSB</span>
+                                                                <span class="visuallyhidden">Step </span><span
+                                                                    class="step-num">3</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="step-name">Confirm Transaction</span>
+                                                                <span class="visuallyhidden">Step </span><span
+                                                                    class="step-num">4</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="step-name">Export Bank File</span>
+                                                                <span class="visuallyhidden">Step </span><span
+                                                                    class="step-num">5</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="step-name">Import Bank File</span>
+                                                                <span class="visuallyhidden">Step </span><span
+                                                                    class="step-num">6</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="step-name">Authorizer Confirm</span>
+                                                                <span class="visuallyhidden">Step </span><span
+                                                                    class="step-num">7</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="step-name">Settlement</span>
+                                                                <span class="visuallyhidden">Step </span><span
+                                                                    class="step-num">8</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="step-name">Update Front</span>
+                                                                <span class="visuallyhidden">Step </span><span
+                                                                    class="step-num">9</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="step-name">Finish</span>
+                                                                <span class="visuallyhidden">Step </span><span
+                                                                    class="step-num">F</span>
+                                                            </li>
+                                                        </ol>
+                                                        <% } %>
+                                                            <% } %>
+                </div>
+            </div>
+        </div>
+        <div id="help-form">
+            <ul>
+                <li><a href="#tabs-1">ATS</a></li>
+                <li><a href="#tabs-2">Bill Payment</a></li>
+            </ul>
+            <div id="tabs-1">
+                <img src="/images/ats-step.png" width="100%" height="100%" />
+            </div>
+            <div id="tabs-2">
+                <img src="/images/bill-payment-step.png" width="100%" height="100%" />
+            </div>
+        </div>
+    </header>
+    <main>
+        <table id="logs" width="100%">
+            <thead>
+                <th>Date/Time</th>
+                <th>Step</th>
+                <th>System</th>
+                <th>Action</th>
+                <th style="display: none;">Status</th>
+                <th style="display: none;">Step</th>
+            </thead>
+            <tbody>
+                <% for (const row of detail) { %>
+                    <tr>
+                        <td>
+                            <%= row[1].value %>
+                        </td>
+                        <td>
+                            <%= row[6].value %>
+
+                        </td>
+                        <td>
+                            <%= row[3].value %>
+                        </td>
+                        <td>
+                            <%= row[4].value %>
+                        </td>
+                        <td style="display: none;">
+                            <%= row[5].value %>
+                        </td>
+                        <td style="display: none;">
+                            <%= row[6].value %>
+                        </td>
+                    </tr>
+                    <% } %>
+
+            </tbody>
+        </table>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    </main>
+
+
+    <footer>
+        <%- include('../views/partials/footer'); %>
+    </footer>
+
+</body>
+
+<script>
+
+    $(document).ready(function () {
+        //Get latest step of RPA
+        var stepRow = $('table tbody tr').eq(0);
+        var current_status = stepRow.find('td').eq(4).text();
+        var current_step = stepRow.find('td').eq(5).text();
+
+        var account_type = '<%= account_type %>';
+        var deposite_type = '<%= deposite_type %>';
+        var cust_name = '<%= customer_name %>';
+        var amount = '<%= amount %>';
+        var bank_code = '<%= bank_code %>';
+        var customer_bankaccount = '<%= customer_bankaccount %>';
+        var company_bankaccount = '<%= company_bankaccount %>';
+        var cust_user = '<%= cust_user %>';
+        var export_path = '<%= export_path %>';
+        var customer_account = '<%= customer_account %>';
+        var registration_no = '<%= registration_no %>';
+
+        var refreshRate = 30; //Set page auto refresh in 10s.
+
+        var process_name = '';
+
+        account_type = account_type.trim();
+        deposite_type = deposite_type.trim();
+        current_status = current_status.trim();
+        current_step = current_step.trim();
+
+        console.log('Account Type: ' + account_type);
+        console.log('Deposite Type: ' + deposite_type);
+        console.log('Current Status: ' + current_status);
+        console.log('Bank Code: ' + bank_code);
+        console.log('Customer Bank Account: ' + customer_bankaccount);
+        console.log('Company Bank Account: ' + company_bankaccount);
+        console.log('Cust User: ' + cust_user);
+        console.log('Export Path: ' + export_path);
+
+        var refreshIntervalId = startRefresh();
+
+        function startRefresh() {
+            return setInterval(function () {
+                if (refreshRate == 0) {
+                    refreshRate = 30;
+                    location.reload();
+                } else {
+                    refreshRate -= 1;
+                }
+
+                $('#timer').text(refreshRate);
+            }, 1000);
+        }
+        //alert('Status: ' + current_status + ', Step: ' + current_step);
+        if (deposite_type === 'ATS') {
+            if (account_type === 'Cash Balance' || account_type === 'Credit Balance') {
+                //updateStatus('ats-cash-balance');
+                process_name = 'ats-cash-balance';
+            } else if (account_type === 'Cash Account') {
+                //updateStatus('ats-cash-account-credit');
+                process_name = 'ats-cash-account-credit';
+            } else if (account_type === 'T-FEX') {
+                //updateStatus('ats-tfex');
+                process_name = 'ats-tfex';
+            }
+
+            updateStatus(process_name);
+        } else if (deposite_type === 'Bill Payment') {
+            if (account_type === 'Cash Balance' || account_type === 'Credit Balance') {
+                //updateStatus('bill-cash-balance');
+                process_name = 'bill-cash-balance';
+            } else if (account_type === 'Cash Account') {
+                //updateStatus('bill-cash-account-credit');
+                process_name = 'bill-cash-account-credit';
+            } else if (account_type === 'T-FEX') {
+                //updateStatus('bill-tfex');
+                process_name = 'bill-tfex';
+            }
+
+            updateStatus(process_name);
+        }
+
+
+        //Update step name in column
+        $('table tbody tr').each(function (index) {
+            var step_no = $(this).find('td').eq(1).text().trim();
+            $(this).find('td').eq(1).text(getStepName(step_no));
+        });
+
+        function getStepName(step_no) {
+            //step_no -=1;
+            //console.log('Step: ' + step_no);
+            if (step_no === 'F') {
+                return step_no + ' - Finish';
+            } else {
+                return step_no + ' - ' + $('#' + process_name + ' li').find('.step-name').eq(step_no - 1).text();
+            }
+
+        }
+
+        function updateStatus(elementClass) {
+            $('#' + elementClass + ' li').each(function (index) {
+                if (current_step !== 'F') {
+                    if (index == (current_step - 1)) {
+                        if (current_status === 'S' || current_status === 'P' || current_status === 'C') {
+                            $(this).removeClass().addClass('current-step');
+                            var label = $('#' + elementClass + ' li:eq(' + index + ') .step-name').text();
+                            $('#' + elementClass + ' li:eq(' + index + ') .step-name').html(label);
+                        } else if (current_status === 'E') {
+                            clearInterval(refreshIntervalId); //stop refresh page on error.
+                            $(this).removeClass().addClass('error-step');
+                            var label = $('#' + elementClass + ' li:eq(' + index + ') .step-name').text();
+                            $('#' + elementClass + ' li:eq(' + index + ') .step-name').html('<span class="button-8">' + label + '</span>');
+
+                        }
+                    } else if (index < (current_step - 1)) {
+                        $(this).removeClass().addClass('active-step');
+                    }
+                } else {
+                    //When Finish job
+                    var label = $('#' + elementClass + ' li:eq(' + index + ') .step-name').text();
+                    if (label === 'Finish') {
+                        $(this).removeClass().addClass('current-step');
+                    } else {
+                        $(this).removeClass().addClass('active-step');
+                    }
+                }
+            });
+        }
+
+        function getRetryScriptName() {
+            //console.log(current_step);
+            var result = {
+                script: '',
+                isExport: 'false',
+                isImport: 'false',
+                data: []
+            };
+            if (deposite_type === 'ATS') {
+                if (account_type === 'Cash Balance' || account_type === 'Credit Balance') {
+                    if (current_step == 2 || current_step == 3 || current_step == 4) {
+                        if (current_step == 3) {
+                            result.isExport = 'true';
+                            result.isImport = 'false';
+
+                            result.data = {
+                                'vAccount': customer_account,
+                                'vRegistrationNo': registration_no,
+                                'vAmount': parseInt(amount.replace(/,/g, '')),
+                                'vCustAccountType': account_type,
+                                'vUsernameNumber': cust_user,
+                                'vAmontForApi': amount,
+                                'vCustName': cust_name,
+                                'TypeTransection': deposite_type,
+                                'vExportRetry': result.isExport,
+                                'vImportRetry': result.isImport,
+                                'BankCode': bank_code
+                            }
+                        } else if (current_step == 4) {
+                            result.isExport = 'false';
+                            result.isImport = 'true';
+                            result.data = {
+                                'vAccount': customer_account,
+                                'vRegistrationNo': registration_no,
+                                'vAmount': parseInt(amount.replace(/,/g, '')),
+                                'vCustAccountType': account_type,
+                                'vUsernameNumber': cust_user,
+                                'vAmontForApi': amount,
+                                'vCustName': cust_name,
+                                'TypeTransection': deposite_type,
+                                'vExportRetry': result.isExport,
+                                'vImportRetry': result.isImport,
+                                'BankCode': bank_code,
+                                'vExportPath': export_path
+                            }
+                        } else {
+                            result.isExport = 'false';
+                            result.isImport = 'false';
+                            result.data = {
+                                'vAccount': customer_account,
+                                'vRegistrationNo': registration_no,
+                                'vAmount': parseInt(amount.replace(/,/g, '')),
+                                'vCustAccountType': account_type,
+                                'vUsernameNumber': cust_user,
+                                'vAmontForApi': amount,
+                                'vCustName': cust_name,
+                                'TypeTransection': deposite_type,
+                                'vExportRetry': result.isExport,
+                                'vImportRetry': result.isImport,
+                                'BankCode': bank_code
+                            }
+                        }
+
+                        result.script = 'SBAEntryAndExport';
+                    } else if (current_step == 6) {
+                        result.data = {
+                            'vAccount': customer_account,
+                            'vRegistrationNo': registration_no,
+                            'vAmount': parseInt(amount.replace(/,/g, '')),
+                            'vCustAccountType': account_type,
+                            'vUsernameNumber': cust_user,
+                            'vAmontForApi': amount,
+                            'vCustName': cust_name,
+                            'TypeTransection': deposite_type,
+                            'vExportRetry': result.isExport,
+                            'vImportRetry': result.isImport,
+                            'BankCode': bank_code
+                        }
+                        result.script = 'AslWebTestFontType';
+                    }
+                } else if (account_type === 'Cash Account') {
+                    if (current_step == 2 || current_step == 3 || current_step == 4) {
+                        if (current_step == 3) {
+                            result.isExport = 'true';
+                            result.isImport = 'false';
+                            result.data = {
+                                'vAccount': customer_account,
+                                'vRegistrationNo': registration_no,
+                                'vAmount': parseInt(amount.replace(/,/g, '')),
+                                'vCustAccountType': account_type,
+                                'vUsernameNumber': cust_user,
+                                'vAmontForApi': amount,
+                                'vCustName': cust_name,
+                                'TypeTransection': deposite_type,
+                                'vExportRetry': result.isExport,
+                                'vImportRetry': result.isImport,
+                                'BankCode': bank_code
+                            }
+                        } else if (current_step == 4) {
+                            result.isExport = 'false';
+                            result.isImport = 'true';
+                            result.data = {
+                                'vAccount': customer_account,
+                                'vRegistrationNo': registration_no,
+                                'vAmount': parseInt(amount.replace(/,/g, '')),
+                                'vCustAccountType': account_type,
+                                'vUsernameNumber': cust_user,
+                                'vAmontForApi': amount,
+                                'vCustName': cust_name,
+                                'TypeTransection': deposite_type,
+                                'vExportRetry': result.isExport,
+                                'vImportRetry': result.isImport,
+                                'BankCode': bank_code,
+                                'vExportPath': export_path
+                            }
+                        } else {
+                            result.isExport = 'false';
+                            result.isImport = 'false';
+                            result.data = {
+                                'vAccount': customer_account,
+                                'vRegistrationNo': registration_no,
+                                'vAmount': parseInt(amount.replace(/,/g, '')),
+                                'vCustAccountType': account_type,
+                                'vUsernameNumber': cust_user,
+                                'vAmontForApi': amount,
+                                'vCustName': cust_name,
+                                'TypeTransection': deposite_type,
+                                'vExportRetry': result.isExport,
+                                'vImportRetry': result.isImport,
+                                'BankCode': bank_code
+                            }
+                        }
+                        result.script = "SBAEntryAndExport";
+                    } else if (current_step == 6) {
+                        result.data = {
+                            'vAccount': customer_account,
+                            'vRegistrationNo': registration_no,
+                            'vAmount': parseInt(amount.replace(/,/g, '')),
+                            'vCustAccountType': account_type,
+                            'vUsernameNumber': cust_user,
+                            'vAmontForApi': amount,
+                            'vCustName': cust_name,
+                            'TypeTransection': deposite_type,
+                            'vExportRetry': result.isExport,
+                            'vImportRetry': result.isImport,
+                            'BankCode': bank_code
+                        }
+                        result.script = 'SBACalCredit';
+                    } else if (current_step == 7) {
+                        result.data = {
+                            'vAccount': customer_account,
+                            'vRegistrationNo': registration_no,
+                            'vAmount': parseInt(amount.replace(/,/g, '')),
+                            'vCustAccountType': account_type,
+                            'vUsernameNumber': cust_user,
+                            'vAmontForApi': amount,
+                            'vCustName': cust_name,
+                            'TypeTransection': deposite_type,
+                            'vExportRetry': result.isExport,
+                            'vImportRetry': result.isImport,
+                            'BankCode': bank_code
+                        }
+                        result.script = 'AslWebTestFontType';
+                    }
+                } else if (account_type === 'T-FEX') {
+                    //updateStatus('ats-tfex');
+                    //process_name = 'ats-tfex';
+                }
+
+                //updateStatus(process_name);
+            } else if (deposite_type === 'Bill Payment') {
+                if (account_type === 'Cash Balance' || account_type === 'Credit Balance') {
+                    if (current_step == 3 || current_step == 4 || current_step == 5) {
+                        if (current_step == 4) {
+                            result.isExport = 'true';
+                            result.isImport = 'false';
+                            result.data = {
+                                'vAccount': customer_account,
+                                'vRegistrationNo': registration_no,
+                                'vAmount': parseInt(amount.replace(/,/g, '')),
+                                'vCustAccountType': account_type,
+                                'vUsernameNumber': cust_user,
+                                'vAmontForApi': amount,
+                                'vCustName': cust_name,
+                                'TypeTransection': deposite_type,
+                                'vExportRetry': result.isExport,
+                                'vImportRetry': result.isImport,
+                                'BankCode': bank_code
+                            }
+
+                        } else if (current_step == 5) {
+                            result.isExport = 'false';
+                            result.isImport = 'true';
+                            result.data = {
+                                'vAccount': customer_account,
+                                'vRegistrationNo': registration_no,
+                                'vAmount': parseInt(amount.replace(/,/g, '')),
+                                'vCustAccountType': account_type,
+                                'vUsernameNumber': cust_user,
+                                'vAmontForApi': amount,
+                                'vCustName': cust_name,
+                                'TypeTransection': deposite_type,
+                                'vExportRetry': result.isExport,
+                                'vImportRetry': result.isImport,
+                                'BankCode': bank_code,
+                                'vExportPath': export_path
+                            }
+                        } else {
+                            result.isExport = 'false';
+                            result.isImport = 'false';
+                            result.data = {
+                                'vAccount': customer_account,
+                                'vRegistrationNo': registration_no,
+                                'vAmount': parseInt(amount.replace(/,/g, '')),
+                                'vCustAccountType': account_type,
+                                'vUsernameNumber': cust_user,
+                                'vAmontForApi': amount,
+                                'vCustName': cust_name,
+                                'TypeTransection': deposite_type,
+                                'vExportRetry': result.isExport,
+                                'vImportRetry': result.isImport,
+                                'BankCode': bank_code
+                            }
+                        }
+                        result.script = "SBAEntryAndExport";
+                    } else if (current_step == 7) {
+                        result.data = {
+                            'vAccount': customer_account,
+                            'vRegistrationNo': registration_no,
+                            'vAmount': parseInt(amount.replace(/,/g, '')),
+                            'vCustAccountType': account_type,
+                            'vUsernameNumber': cust_user,
+                            'vAmontForApi': amount,
+                            'vCustName': cust_name,
+                            'TypeTransection': deposite_type,
+                            'vExportRetry': result.isExport,
+                            'vImportRetry': result.isImport,
+                            'BankCode': bank_code
+                        }
+                        result.script = 'AslWebTestFontType';
+                    }
+                } else if (account_type === 'Cash Account') {
+                    if (current_step == 3 || current_step == 4 || current_step == 5) {
+                        if (current_step == 4) {
+                            result.isExport = 'true';
+                            result.isImport = 'false';
+                            result.data = {
+                                'vAccount': customer_account,
+                                'vRegistrationNo': registration_no,
+                                'vAmount': parseInt(amount.replace(/,/g, '')),
+                                'vCustAccountType': account_type,
+                                'vUsernameNumber': cust_user,
+                                'vAmontForApi': amount,
+                                'vCustName': cust_name,
+                                'TypeTransection': deposite_type,
+                                'vExportRetry': result.isExport,
+                                'vImportRetry': result.isImport,
+                                'BankCode': bank_code
+                            }
+                        } else if (current_step == 5) {
+                            result.isExport = 'false';
+                            result.isImport = 'true';
+                            result.data = {
+                                'vAccount': customer_account,
+                                'vRegistrationNo': registration_no,
+                                'vAmount': parseInt(amount.replace(/,/g, '')),
+                                'vCustAccountType': account_type,
+                                'vUsernameNumber': cust_user,
+                                'vAmontForApi': amount,
+                                'vCustName': cust_name,
+                                'TypeTransection': deposite_type,
+                                'vExportRetry': result.isExport,
+                                'vImportRetry': result.isImport,
+                                'BankCode': bank_code,
+                                'vExportPath': export_path
+                            }
+                        } else {
+                            result.isExport = 'false';
+                            result.isImport = 'false';
+                            result.data = {
+                                'vAccount': customer_account,
+                                'vRegistrationNo': registration_no,
+                                'vAmount': parseInt(amount.replace(/,/g, '')),
+                                'vCustAccountType': account_type,
+                                'vUsernameNumber': cust_user,
+                                'vAmontForApi': amount,
+                                'vCustName': cust_name,
+                                'TypeTransection': deposite_type,
+                                'vExportRetry': result.isExport,
+                                'vImportRetry': result.isImport,
+                                'BankCode': bank_code
+                            }
+                        }
+                        result.script = "SBAEntryAndExport";
+                    } else if (current_step == 7) {
+                        result.data = {
+                            'vAccount': customer_account,
+                            'vRegistrationNo': registration_no,
+                            'vAmount': parseInt(amount.replace(/,/g, '')),
+                            'vCustAccountType': account_type,
+                            'vUsernameNumber': cust_user,
+                            'vAmontForApi': amount,
+                            'vCustName': cust_name,
+                            'TypeTransection': deposite_type,
+                            'vExportRetry': result.isExport,
+                            'vImportRetry': result.isImport,
+                            'BankCode': bank_code
+                        }
+                        result.script = 'SBACalCredit';
+                    } else if (current_step == 8) {
+                        result.data = {
+                            'vAccount': customer_account,
+                            'vRegistrationNo': registration_no,
+                            'vAmount': parseInt(amount.replace(/,/g, '')),
+                            'vCustAccountType': account_type,
+                            'vUsernameNumber': cust_user,
+                            'vAmontForApi': amount,
+                            'vCustName': cust_name,
+                            'TypeTransection': deposite_type,
+                            'vExportRetry': result.isExport,
+                            'vImportRetry': result.isImport,
+                            'BankCode': bank_code
+                        }
+                        result.script = 'AslWebTestFontType';
+                    }
+                } else if (account_type === 'T-FEX') {
+                }
+
+                //updateStatus(process_name);
+            }
+            console.log("Result: " + JSON.stringify(result));
+            return result;
+        }
+
+        $('.button-8').click(function () {
+            var apiurl = '<%= apiurl %>';
+            var result = getRetryScriptName();
+            apiurl += result.script + "?unlockmachine=false";
+
+            current_status = 'P';
+            updateStatus(process_name);
+
+            console.log(JSON.stringify(result.data));
+
+            $.ajax({
+                type: "POST",
+                url: apiurl,
+                data: JSON.stringify(result.data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    //refreshIntervalId = startRefresh();
+                    console.log(response);
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response here
+                    alert('Failed to retry.');
+                    location.reload();
+                    console.log('Error:', error);
+                    console.log('Status:', status);
+                    console.log('XHR:', xhr);
+                }
+            });
+        });
+
+
+        $("#help-form").dialog({
+            autoOpen: false,
+            height: 400,
+            width: 800,
+            modal: true
+        });
+
+        $("#help-form").tabs();
+
+        $("#help").click(function () {
+            $("#help-form").dialog("open");
+        });
+
+        var firstRow = $('#logs tr').first();
+        firstRow.addClass("active-log");
+
+    });
+
+</script>
+
+</html>
