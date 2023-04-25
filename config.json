@@ -2,5 +2,5 @@
 
     "apiurl": "http://localhost:3000/",
     "baseurl": "http://localhost:3001",
-    "itemapi": "itemmas"
+    "itemapi": "items"
   }
